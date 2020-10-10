@@ -6,7 +6,7 @@ import time
 
 
 class Papers:
-    def __init__(self,papers,comp=None,preprocess=None):
+    def __init__(self,papers=None,comp=None,preprocess=None):
         self.relations = {}
         self.papers = papers
         if preprocess:
@@ -28,12 +28,18 @@ class Papers:
 
 
     def get_relations(self):
+        if not self.papers:
+            raise Exception('There is no paper')
         for paper in self.papers:
             self.relations[paper['label']] = self.get_references(**paper)
         return self.relations
 
     def main(self):
         return self.get_relations()
+
+    def __call__(self,papers):
+        self.papers = papers
+
 
     
 if __name__ == '__main__':
